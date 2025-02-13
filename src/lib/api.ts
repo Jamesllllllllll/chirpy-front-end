@@ -1,9 +1,12 @@
 import { User, Chirp } from "../types";
 
-const API_URL = "/api";
+// const LOCAL_API_URL = "/api";
+// const REMOTE_API_URL = import.meta.env.REMOTE_API_URL
+
+const API_URL = "https://chirpy.fly.dev";
 
 export async function login(email: string, password: string): Promise<User> {
-  const response = await fetch(`${API_URL}/login`, {
+  const response = await fetch(`${API_URL}/api/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,17 +21,21 @@ export async function login(email: string, password: string): Promise<User> {
   return response.json();
 }
 
-export async function register(email: string, password: string, username: string): Promise<User> {
-  const response = await fetch(`${API_URL}/users`, {
-    method: 'POST',
+export async function register(
+  email: string,
+  password: string,
+  username: string
+): Promise<User> {
+  const response = await fetch(`${API_URL}/api/users`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password, username }),
   });
 
   if (!response.ok) {
-    throw new Error('Registration failed');
+    throw new Error("Registration failed");
   }
 
   return response.json();
@@ -46,7 +53,7 @@ export async function getChirps(
     params.append("sort", "desc");
   }
 
-  const response = await fetch(`${API_URL}/chirps?${params.toString()}`);
+  const response = await fetch(`${API_URL}/api/chirps?${params.toString()}`);
   if (!response.ok) {
     throw new Error("Failed to fetch chirps");
   }
@@ -55,7 +62,7 @@ export async function getChirps(
 }
 
 export async function createChirp(body: string, token: string): Promise<Chirp> {
-  const response = await fetch(`${API_URL}/chirps`, {
+  const response = await fetch(`${API_URL}/api/chirps`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -75,7 +82,7 @@ export async function deleteChirp(
   chirpId: string,
   token: string
 ): Promise<void> {
-  const response = await fetch(`${API_URL}/chirps/${chirpId}`, {
+  const response = await fetch(`${API_URL}/api/chirps/${chirpId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
