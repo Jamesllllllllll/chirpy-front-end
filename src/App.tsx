@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { User, Chirp } from "./types";
 import { AuthForm } from "./components/AuthForm";
 import { ChirpForm } from "./components/ChirpForm";
@@ -42,7 +42,7 @@ function App() {
           <header className="bg-gray-900/50 border-b border-gray-800">
             <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
               <div className="flex gap-4 items-center">
-                <img src="./src/assets/bird.png" />
+                <img src="/bird.png" />
                 <h1 className="text-4xl font-extralight text-blue-500 font-['DynaPuff']">Chirpy</h1>
               </div>
               <button
@@ -71,7 +71,7 @@ function App() {
         <header className="bg-gray-900/50 border-b border-gray-800">
           <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
             <div className="flex gap-3">
-              <img src="./src/assets/bird.png" />
+              <img src="/bird.png" />
               <h1 className="text-4xl text-blue-500 font-['DynaPuff']">Chirpy</h1>
             </div>
             <div className="flex items-center space-x-4">
