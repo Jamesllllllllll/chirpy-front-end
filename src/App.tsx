@@ -37,7 +37,7 @@ function App() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[url('https://www.boot.dev/img/maptexture2.webp')] bg-cover bg-center">
+      <div className="min-h-screen bg-[url('./maptexture2.webp')] bg-cover bg-center">
         <div className="min-h-screen bg-gray-950/80">
           <header className="bg-gray-900/50 border-b border-gray-800">
             <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
@@ -66,7 +66,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[url('https://www.boot.dev/img/maptexture2.webp')] bg-cover bg-center">
+    <div className="min-h-screen bg-[url('./maptexture2.webp')] bg-cover bg-center">
       <div className="min-h-screen bg-gray-950/80">
         <header className="bg-gray-900/50 border-b border-gray-800">
           <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
