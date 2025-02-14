@@ -31,7 +31,7 @@ export function ChirpList({
   };
 
   return (
-    <motion.div className="space-y-4">
+    <div className="space-y-4">
       <AnimatePresence mode="popLayout">
         {chirps.map((chirp) => {
           return (
@@ -45,7 +45,7 @@ export function ChirpList({
               className="p-4 bg-gray-900 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors"
             >
               <div className="flex justify-between items-start">
-                <div>
+                <div className="overflow-hidden">
                   <span className="flex items-center text-sm text-gray-400 mr-2">
                     {chirp.user_id ===
                       "37341b4b-7a2a-44ac-815d-3601debae372" && (
@@ -71,7 +71,7 @@ export function ChirpList({
                       });
                     })()}
                   </span>
-                  <p className="font-medium text-gray-200 mt-1">{chirp.body}</p>
+                  <p className="font-medium text-gray-200 mt-1 break-words">{chirp.body}</p>
                 </div>
                 {(currentUserId === chirp.user_id || isModerator) && token && (
                   <button
@@ -86,6 +86,6 @@ export function ChirpList({
           );
         })}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }

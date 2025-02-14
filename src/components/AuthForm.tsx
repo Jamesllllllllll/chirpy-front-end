@@ -105,6 +105,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               <input
                 type="text"
                 id="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
