@@ -3,9 +3,8 @@ import { User, Chirp } from "./types";
 import { AuthForm } from "./components/AuthForm";
 import { ChirpForm } from "./components/ChirpForm";
 import { ChirpList } from "./components/ChirpList";
-import { getChirps } from "./lib/api";
+import { getChirps, checkRefreshToken } from "./lib/api";
 import { LogOut } from "lucide-react";
-import { checkRefreshToken } from "./lib/api";
 
 function App() {
   const [user, setUser] = useState<User | null>(() => {
@@ -55,8 +54,18 @@ function App() {
         }
 
         const userData = await userResponse.json();
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
+        const existingUser = localStorage.getItem("user");
+        const parsedExistingUser = existingUser ? JSON.parse(existingUser) : {};
+
+        const updatedUser = {
+          ...userData,
+          token: parsedExistingUser.token || userData.token,
+          refresh_token: parsedExistingUser.refresh_token || userData.refresh_token,
+        };
+
+        setUser(updatedUser);
+        console.log('setting user data:', updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
       } catch (error) {
         console.error("Error initializing user:", error);
         setUser(null);
@@ -73,11 +82,13 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
   };
 
   const handleAuth = (user: User) => {
     setUser(user);
     localStorage.setItem("refresh_token", user.refresh_token);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   if (!user) {
@@ -129,7 +140,7 @@ function App() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-300">{user.username}</span>
+              <span className="text-gray-300">Logged in as: <span className="font-semibold">{user.username}</span></span>
               <button
                 onClick={handleLogout}
                 className="flex items-center text-gray-400 hover:text-gray-200 transition-colors"

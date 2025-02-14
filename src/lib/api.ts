@@ -66,6 +66,8 @@ export async function getChirps(
 }
 
 export async function createChirp(body: string, token: string): Promise<Chirp> {
+  console.log('token:', token);
+  console.log('body:', body);
   const response = await fetch(`${API_URL}/api/chirps`, {
     method: "POST",
     headers: {
