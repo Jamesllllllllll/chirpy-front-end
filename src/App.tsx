@@ -14,7 +14,6 @@ function App() {
   const fetchChirps = async () => {
     try {
       const response = await getChirps();
-      console.log(response);
       setChirps(response);
     } catch (error) {
       console.error("Failed to fetch chirps:", error);

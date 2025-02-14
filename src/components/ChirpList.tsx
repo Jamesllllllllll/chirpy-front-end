@@ -32,7 +32,6 @@ export function ChirpList({
     <motion.div className="space-y-4">
       <AnimatePresence mode="popLayout">
         {chirps.map((chirp) => {
-          console.log(chirp.created_at);
           return (
             <motion.div
               key={chirp.id}
