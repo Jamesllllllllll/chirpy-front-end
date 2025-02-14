@@ -1,6 +1,6 @@
 import { Chirp } from "../types";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { Gavel, Trash2 } from "lucide-react";
 import { deleteChirp } from "../lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -45,15 +45,19 @@ export function ChirpList({
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <span className="text-sm text-gray-400 mr-2">
+                  <span className="flex items-center text-sm text-gray-400 mr-2">
                     {chirp.user_id ===
                       "37341b4b-7a2a-44ac-815d-3601debae372" && (
                       <img
-                        className="mr-1 inline"
+                        className="mr-1"
                         width="16"
                         height="16"
                         src="/grandmagus.png"
                       />
+                    )}
+                    {chirp.user_id ===
+                      "39fd0aff-6fb1-4a2f-82ca-afa6d3d1e6d9" && (
+                      <Gavel className="w-4 h-4 mr-1 inline" />
                     )}
                     @{chirp.username}
                   </span>
