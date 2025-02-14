@@ -5,11 +5,17 @@ import { ChirpForm } from "./components/ChirpForm";
 import { ChirpList } from "./components/ChirpList";
 import { getChirps } from "./lib/api";
 import { LogOut } from "lucide-react";
+import { checkRefreshToken } from "./lib/api";
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [chirps, setChirps] = useState<Chirp[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const API_URL = "https://chirpy.fly.dev";
 
   const fetchChirps = async () => {
     try {
@@ -23,15 +29,55 @@ function App() {
   };
 
   useEffect(() => {
+    const initializeUser = async () => {
+      setLoading(true);
+      try {
+        const accessToken = await checkRefreshToken();
+
+        if (!accessToken) {
+          console.log("No refresh token found");
+          setUser(null);
+          localStorage.removeItem("user");
+          return;
+        }
+
+        const userResponse = await fetch(`${API_URL}/api/getuser`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!userResponse.ok) {
+          console.error("Failed to fetch user data:", userResponse);
+          setUser(null);
+          localStorage.removeItem("user");
+          return;
+        }
+
+        const userData = await userResponse.json();
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+      } catch (error) {
+        console.error("Error initializing user:", error);
+        setUser(null);
+        localStorage.removeItem("user");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeUser();
     fetchChirps();
   }, []);
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem("refresh_token");
   };
 
   const handleAuth = (user: User) => {
     setUser(user);
+    localStorage.setItem("refresh_token", user.refresh_token);
   };
 
   if (!user) {
@@ -59,7 +105,11 @@ function App() {
             </div>
           </header>
           <main className="max-w-4xl mx-auto px-4 py-8">
-            <ChirpList chirps={chirps} onChirpDeleted={fetchChirps} />
+            <ChirpList
+              chirps={chirps}
+              onChirpDeleted={fetchChirps}
+              isModerator={false}
+            />
             <AuthForm onSuccess={handleAuth} />
           </main>
         </div>

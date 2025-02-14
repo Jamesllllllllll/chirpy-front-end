@@ -18,7 +18,11 @@ export async function login(email: string, password: string): Promise<User> {
     throw new Error("Login failed");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  localStorage.setItem("user", JSON.stringify(data));
+
+  return data;
 }
 
 export async function register(
@@ -91,5 +95,31 @@ export async function deleteChirp(
 
   if (!response.ok) {
     throw new Error("Failed to delete chirp");
+  }
+}
+
+export async function checkRefreshToken(): Promise<User | null> {
+  const refreshToken = localStorage.getItem("refresh_token");
+  if (!refreshToken) return null;
+
+  try {
+    const response = await fetch(`${API_URL}/api/refresh`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${refreshToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to refresh token");
+    }
+
+    const data = await response.json();
+    console.log("Response from /api/refresh:", data);
+    return data.token;
+  } catch (error) {
+    console.error("Failed to refresh token:", error);
+    return null;
   }
 }

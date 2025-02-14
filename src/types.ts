@@ -3,9 +3,9 @@ export interface User {
   email: string;
   created_at: string;
   updated_at: string;
-  token?: string;
-  refresh_token?: string;
-  is_chirpy_red?: boolean;
+  token: string;
+  refresh_token: string;
+  is_chirpy_red: boolean;
   username: string;
 }
 

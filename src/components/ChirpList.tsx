@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface ChirpListProps {
   chirps: Chirp[];
   currentUserId?: string;
+  isModerator: boolean | undefined;
   token?: string;
   onChirpDeleted: () => void;
 }
