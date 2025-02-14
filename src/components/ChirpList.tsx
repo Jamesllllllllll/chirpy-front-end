@@ -50,9 +50,7 @@ export function ChirpList({
                   </span>
                   <span className="text-xs text-gray-500 mb-0.5">
                     {(() => {
-                      const parsedDate = parseISO(
-                        chirp.created_at.replace("Z", "")
-                      );
+                      const parsedDate = parseISO(chirp.created_at);
                       return formatDistanceToNow(parsedDate, {
                         addSuffix: true,
                         includeSeconds: true,
