@@ -42,10 +42,16 @@ function App() {
             <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
               <div className="flex gap-4 items-center">
                 <img src="/bird.png" />
-                <h1 className="text-4xl text-stone-200 cinzel-decorative-regular">Chirpy</h1>
+                <h1 className="text-4xl text-stone-200 cinzel-decorative-regular">
+                  Chirpy
+                </h1>
               </div>
               <button
-                onClick={() => (document.getElementById('auth-modal') as HTMLDialogElement)?.showModal()}
+                onClick={() =>
+                  (
+                    document.getElementById("auth-modal") as HTMLDialogElement
+                  )?.showModal()
+                }
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
                 Login / Register
@@ -53,10 +59,7 @@ function App() {
             </div>
           </header>
           <main className="max-w-4xl mx-auto px-4 py-8">
-            <ChirpList
-              chirps={chirps}
-              onChirpDeleted={fetchChirps}
-            />
+            <ChirpList chirps={chirps} onChirpDeleted={fetchChirps} />
             <AuthForm onSuccess={handleAuth} />
           </main>
         </div>
@@ -69,9 +72,11 @@ function App() {
       <div className="min-h-screen bg-gray-950/80">
         <header className="bg-gray-900/50 border-b border-gray-800">
           <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between gap-4 items-center">
-            <div className="flex gap-3">
+            <div className="flex gap-4 items-center">
               <img src="/bird.png" />
-              <h1 className="text-4xl text-stone-200 cinzel-decorative-regular">Chirpy</h1>
+              <h1 className="text-4xl text-stone-200 cinzel-decorative-regular">
+                Chirpy
+              </h1>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-300">{user.username}</span>
@@ -90,11 +95,14 @@ function App() {
           <ChirpForm token={user.token!} onChirpCreated={fetchChirps} />
 
           {loading ? (
-            <div className="text-center py-8 text-gray-400">Loading chirps...</div>
+            <div className="text-center py-8 text-gray-400">
+              Loading chirps...
+            </div>
           ) : (
             <ChirpList
               chirps={chirps}
               currentUserId={user.id}
+              isModerator={user.is_chirpy_red}
               token={user.token}
               onChirpDeleted={fetchChirps}
             />
