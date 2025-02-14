@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { User } from '../types';
-import { login, register } from '../lib/api';
-import { LogIn, UserPlus } from 'lucide-react';
+import React, { useState } from "react";
+import { User } from "../types";
+import { login, register } from "../lib/api";
+import { LogIn, UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface AuthFormProps {
@@ -10,15 +10,15 @@ interface AuthFormProps {
 
 export function AuthForm({ onSuccess }: AuthFormProps) {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
@@ -31,7 +31,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
       }
       onSuccess(user);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
       onClick={(e) => {
         const dialog = e.currentTarget;
         const rect = dialog.getBoundingClientRect();
-        
+
         if (
           e.clientX < rect.left ||
           e.clientX > rect.right ||
@@ -65,17 +65,24 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             {isLogin ? "Login" : "Create Account"}
           </h2>
           <button
-            onClick={() => (document.getElementById('auth-modal') as HTMLDialogElement)?.close()}
+            onClick={() =>
+              (
+                document.getElementById("auth-modal") as HTMLDialogElement
+              )?.close()
+            }
             className="text-gray-500 hover:text-gray-300"
           >
             ✕
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Email {!isLogin && <span className="text-xs">(use a fake one)</span>}
             </label>
             <input
               type="email"
@@ -88,8 +95,11 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
           </div>
 
           {!isLogin && (
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <div className="flex flex-col gap-1.5">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-300"
+              >
                 Username
               </label>
               <input
@@ -103,8 +113,11 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             </div>
           )}
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-300"
+            >
               Password
             </label>
             <input
@@ -117,9 +130,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             />
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             type="submit"
@@ -127,7 +138,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             {loading ? (
-              'Please wait...'
+              "Please wait..."
             ) : isLogin ? (
               <div className="flex items-center justify-center">
                 <LogIn className="w-4 h-4 mr-2" />
@@ -148,7 +159,9 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             onClick={() => setIsLogin(!isLogin)}
             className="text-blue-400 hover:text-blue-300"
           >
-            {isLogin ? "Need an account? Register" : "Already have an account? Login"}
+            {isLogin
+              ? "Need an account? Register"
+              : "Already have an account? Login"}
           </button>
         </div>
       </motion.div>
