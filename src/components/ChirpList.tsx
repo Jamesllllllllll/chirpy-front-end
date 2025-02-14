@@ -45,7 +45,7 @@ export function ChirpList({
               <div className="flex justify-between items-start">
                 <div>
                   <span className="text-sm text-gray-400 mr-2">
-                    @{chirp.username}
+                    {chirp.user_id === "37341b4b-7a2a-44ac-815d-3601debae372" && <img className="mr-0.5 inline" width="16" height="16" src="/grandmagus.png" />}@{chirp.username}
                   </span>
                   <span className="text-xs text-gray-500 mb-0.5">
                     {(() => {
