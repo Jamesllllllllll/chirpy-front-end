@@ -87,6 +87,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             <input
               type="email"
               id="email"
+              autoComplete="none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 rounded-md bg-gray-800 border border-gray-700 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
@@ -137,7 +138,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="w-full mt-4 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors"
           >
             {loading ? (
               "Please wait..."

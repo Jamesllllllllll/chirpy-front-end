@@ -65,10 +65,15 @@ export async function getChirps(
   return response.json();
 }
 
-export async function createChirp(body: string, token: string): Promise<Chirp> {
-  console.log('token:', token);
-  console.log('body:', body);
-  const response = await fetch(`${API_URL}/api/chirps`, {
+export async function createChirp(
+  body: string,
+  token: string,
+  image: File | null
+): Promise<Chirp> {
+  console.log("token:", token);
+  console.log("body:", body);
+  console.log("image:", image);
+  const chirp = await fetch(`${API_URL}/api/chirps`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -77,11 +82,32 @@ export async function createChirp(body: string, token: string): Promise<Chirp> {
     body: JSON.stringify({ body }),
   });
 
-  if (!response.ok) {
+  if (!chirp.ok) {
     throw new Error("Failed to create chirp");
   }
+  const returnedChirp: Chirp = await chirp.json();
+  console.log("chirp:", returnedChirp);
 
-  return response.json();
+  if (image) {
+    const formData = new FormData();
+    formData.append("image", image);
+    const chirpWithImage = await fetch(
+      `${API_URL}/api/upload?chirpID=${returnedChirp.id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+    if (!chirpWithImage.ok) {
+      throw new Error("Chirp posted, but image upload failed.");
+    }
+    return chirpWithImage.json();
+  }
+
+  return returnedChirp;
 }
 
 export async function deleteChirp(
@@ -109,7 +135,7 @@ export async function checkRefreshToken(): Promise<User | null> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${refreshToken}`,
       },
     });
 

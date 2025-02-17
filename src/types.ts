@@ -16,4 +16,5 @@ export interface Chirp {
   created_at: string;
   updated_at: string;
   username: string;
+  imageURL: string;
 }

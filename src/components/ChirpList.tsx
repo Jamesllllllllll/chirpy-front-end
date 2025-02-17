@@ -72,6 +72,8 @@ export function ChirpList({
                     })()}
                   </span>
                   <p className="font-medium text-gray-200 mt-1 break-words">{chirp.body}</p>
+                  {chirp.imageURL && 
+                  <img src={chirp.imageURL} className="max-w-full max-h-96 rounded-lg border-gray-800 border mt-2" />}
                 </div>
                 {(currentUserId === chirp.user_id || isModerator) && token && (
                   <button
