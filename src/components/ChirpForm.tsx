@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createChirp } from "../lib/api";
-import { Send, Loader2, ImagePlus, X } from "lucide-react";
+import { Send, Loader2, ImagePlus, X, Smile } from "lucide-react";
 
 interface ChirpFormProps {
   token: string;
@@ -91,19 +91,31 @@ export function ChirpForm({ token, onChirpCreated }: ChirpFormProps) {
       </div>
       {error && <p className="text-red-500 text-sm">{error}</p>}
       {image && (
-        <div className="relative mt-4 w-fit">
-          <button
-            type="button"
-            onClick={handleRemoveImage}
-            className="absolute top-2 right-2 z-10"
+        <>
+          <div
+            className="bg-blue-100 mt-4 border-l-4 border-blue-500 text-blue-700 p-4"
+            role="alert"
           >
-            <X className="w-4 h-4" />
-          </button>
-          <img
-            src={URL.createObjectURL(image)}
-            className="relative max-w-full max-h-96 rounded-lg border-gray-800 border mt-2"
-          />
-        </div>
+            <p className="font-bold">Keep it positive!</p>
+            <p>
+              Uploaded images should be "PG-13" or less. Don't make me turn
+              image uploads off <Smile className="inline w-4 h-4" />
+            </p>
+          </div>
+          <div className="relative mt-4 w-fit">
+            <button
+              type="button"
+              onClick={handleRemoveImage}
+              className="absolute top-2 right-2 z-10"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <img
+              src={URL.createObjectURL(image)}
+              className="relative max-w-full max-h-96 rounded-lg border-gray-800 border mt-2"
+            />
+          </div>
+        </>
       )}
     </form>
   );
